@@ -1,0 +1,193 @@
+<UserControl x:Class="Wpf.Views.HomeView"
+             x:Name="homeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Wpf.Views"
+             xmlns:vm="clr-namespace:Wpf.ViewModels"
+             mc:Ignorable="d" 
+
+             d:DesignHeight="700" d:DesignWidth="1000">
+
+    <ScrollViewer>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Dashboard Cards -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Tổng số phương tiện -->
+                <Border Grid.Column="0" Margin="10" 
+                        Background="#2196F3" CornerRadius="10"
+                        Height="120">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Tổng số phương tiện"
+                                 Foreground="White"
+                                 FontSize="16"/>
+                        <TextBlock Grid.Row="1"
+                                 Text="{Binding TotalVehicles}"
+                                 Foreground="White"
+                                 FontSize="36"
+                                 VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Số lượt kiểm định tháng này -->
+                <Border Grid.Column="1" Margin="10" 
+                        Background="#4CAF50" CornerRadius="10"
+                        Height="120">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Lượt kiểm định tháng này"
+                                 Foreground="White"
+                                 FontSize="16"/>
+                        <TextBlock Grid.Row="1"
+                                 Text="{Binding TotalInspectionsThisMonth}"
+                                 Foreground="White"
+                                 FontSize="36"
+                                 VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Số trạm đăng kiểm -->
+                <Border Grid.Column="2" Margin="10" 
+                        Background="#FF9800" CornerRadius="10"
+                        Height="120">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Trạm đăng kiểm"
+                                 Foreground="White"
+                                 FontSize="16"/>
+                        <TextBlock Grid.Row="1"
+                                 Text="{Binding TotalInspectionStations}"
+                                 Foreground="White"
+                                 FontSize="36"
+                                 VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Thông báo chưa đọc -->
+                <Border Grid.Column="3" Margin="10" 
+                        Background="#F44336" CornerRadius="10"
+                        Height="120">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Thông báo chưa đọc"
+                                 Foreground="White"
+                                 FontSize="16"/>
+                        <TextBlock Grid.Row="1"
+                                 Text="{Binding UnreadNotifications}"
+                                 Foreground="White"
+                                 FontSize="36"
+                                 VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Recent Lists -->
+            <Grid Grid.Row="1" Margin="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Recent Inspections -->
+                <Border Grid.Column="0" Margin="10"
+                        Background="White" CornerRadius="10"
+                        BorderBrush="#E0E0E0" BorderThickness="1">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Kiểm định gần đây"
+                                 FontSize="18"
+                                 FontWeight="SemiBold"
+                                 Margin="0,0,0,10"/>
+                        <ListView Grid.Row="1" 
+                                 ItemsSource="{Binding RecentInspections}"
+                                 BorderThickness="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Vehicle.PlateNumber}"
+                                                 FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="1"
+                                                 Text="{Binding Station.Name}"
+                                                 Margin="10,0"/>
+                                        <TextBlock Grid.Column="2"
+                                                 Text="{Binding InspectionDate, StringFormat=dd/MM/yyyy}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Border>
+
+                <!-- Recent Notifications -->
+                <Border Grid.Column="1" Margin="10"
+                        Background="White" CornerRadius="10"
+                        BorderBrush="#E0E0E0" BorderThickness="1">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Thông báo gần đây"
+                                 FontSize="18"
+                                 FontWeight="SemiBold"
+                                 Margin="0,0,0,10"/>
+                        <ListView Grid.Row="1" 
+                                 ItemsSource="{Binding RecentNotifications}"
+                                 BorderThickness="0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding Message}"
+                                                 TextWrapping="Wrap"/>
+                                        <TextBlock Grid.Column="1"
+                                                 Text="{Binding SentDate, StringFormat=dd/MM/yyyy HH:mm}"
+                                                 Margin="10,0,0,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
